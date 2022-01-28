@@ -1,2 +1,16 @@
 use calculated field to create a link
 ="<a href='"&%URL_Field_Name%&"'> "&[%field_name%]&"</a>"
+
+In Excel you will need columns:
+
+Desc = hyperlink text
+URL = URL link
+HTML = formula to create an HTML hyperlink anchor
+A	B	C
+1	Desc	URL	HTML
+2	MyLink	https://link.to/blah	=concatenate("<a href=""",A2,""">",B2,"")
+In your SharePoint List, you will need a column set as:
+
+Multiple lines of text
+Use enhanced rich text (Rich text with pictures, tables, and hyperlinks)
+You can then copy/paste from Excel the HTML column into your SharePoint list column while in grid view (allowing adding dozens of rows at a time).
