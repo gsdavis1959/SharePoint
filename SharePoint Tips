@@ -1,0 +1,2 @@
+use calculated field to create a link
+="<a href='"&%URL_Field_Name%&"'> "&[%field_name%]&"</a>"
