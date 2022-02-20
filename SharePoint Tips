@@ -14,3 +14,42 @@ In your SharePoint List, you will need a column set as:
 Multiple lines of text
 Use enhanced rich text (Rich text with pictures, tables, and hyperlinks)
 You can then copy/paste from Excel the HTML column into your SharePoint list column while in grid view (allowing adding dozens of rows at a time).
+
+Calculated field for sortable date
+=CONCATENATE(TEXT([Some Date Column],"MM")," : ",TEXT([Some Date Column],"MMM"))
+
+Create a pull down list for a SharePoint list filter
+<script src="http://code.jquery.com/jquery-1.12.2.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	var siteURL="/Lists/MyList/AllItems.aspx?";
+	var queryString="";
+	$("#ListFilter").click(function(){
+		if($("#Column1").val()!=""){
+			queryString+="FilterField1=Column1&FilterValue1="+$("#Column1").val();
+		}
+		if($("#Column2").val()!=""){
+			queryString+="&FilterField2=Column2&FilterValue2="+$("#Column2").val();
+		}
+		window.location.href=siteURL+queryString;
+	});
+});
+</script>
+<div> 
+Column1:
+<select id="Column1">
+<option value=""></option>
+<option value="Test1">Test1</option>
+<option value="Test2">Test2</option>
+<option value="Test3">Test3</option>
+</select>
+&nbsp;Column2:
+<select id="Column2">
+<option value=""></option>
+<option value="Choice1">Choice1</option>
+<option value="Choice2">Choice2</option>
+<option value="Choice3">Choice3</option>
+</select>
+&nbsp;<input id="ListFilter" type="button" value="Filter">
+</div>
+
