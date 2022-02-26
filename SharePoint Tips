@@ -53,3 +53,111 @@ Column1:
 &nbsp;<input id="ListFilter" type="button" value="Filter">
 </div>
 
+Fixed Header
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+stickyHeaders()
+})
+function stickyHeaders(){
+if( jQuery.inArray( "spgantt.js", g_spPreFetchKeys ) > -1){
+SP.SOD.executeOrDelayUntilScriptLoaded(function () {
+findListsOnPage();
+}, "spgantt.js");
+} else {
+findListsOnPage();
+}
+$(window).bind('hashchange', findListsOnPage);
+}
+function findListsOnPage() {
+var lists          = $('.ms-listviewtable')
+var quickEditLists = [];
+var listViews      = [];
+$(lists).each(function(i){
+if($(this).find('div[id^="spgridcontainer"]').length > 0 ){
+quickEditLists.push($(this))
+} else if( $(this).hasClass("ms-listviewgrid") == false ) {
+listViews.push($(this))
+}
+})
+if(quickEditLists.length > 0) {
+SP.GanttControl.WaitForGanttCreation(function (ganttChart) {
+initializeStickyHeaders(quickEditLists, "qe");
+});
+}
+if(listViews.length > 0) {
+initializeStickyHeaders(listViews, "lv");
+}
+}
+function initializeStickyHeaders (lists, type) {
+var top_old        = [], top_new        = [],
+bottom_old     = [], bottom_new     = [],
+stickies       = [], headers        = [],
+indexOffset    = 0 ;
+var style = "position:fixed;" +
+"top:65px;" +
+"z-index:1;" +
+"background-color:beige;" +
+"box-shadow:3px 3px 5px #DDDDDD;" +
+"display:none"
+$(window).unbind('resize.' + type);
+$(window).bind  ('resize.' + type, updatestickies );
+$('#s4-workspace').unbind('scroll.' + type);
+$('#s4-workspace').bind  ('scroll.' + type, updatestickies );
+$(lists).each(function(){
+headers.push($(this).find($('.ms-viewheadertr:visible')))
+});
+$(headers).each(function (i) {
+var table = $(this).closest("table");
+if(table.find("tbody > tr").length > 1) {
+table.parent().find(".sticky-anchor").remove()
+table.parent().find(".sticky").remove()
+var anchor = table.before('<div class="sticky-anchor"></div>')
+stickies.push($(this).clone(true,true).addClass("sticky").attr('style', style).insertAfter(anchor))
+var tbodies = $(this).parent("thead").siblings("tbody")
+if(tbodies.length > 1) {
+tbodies.bind("DOMAttrModified", function(){
+setTimeout(function(){
+$('#s4-workspace').trigger("scroll", true)
+}, 250)
+})
+}
+} else {
+headers.splice(i-indexOffset,1)
+indexOffset++;
+}
+})
+//Do it once even without beeing triggered by an event
+updatestickies();
+function updatestickies (event, DOMchangeEvent) {
+$(headers).each(function (i) {
+if(DOMchangeEvent) {
+width();
+return false;
+}
+function width() {
+stickies[i].width(headers[i].width()).find('th').each(function (j) {
+$(this).width(headers[i].find('th:nth-child(' + (j+1) + ')').width())
+})
+}
+top_old[i]    = top_new[i]
+top_new[i]    = Math.round($(this).offset().top – 45)
+bottom_old[i] = bottom_new[i]
+bottom_new[i] = Math.round(top_new[i] – 30 + $(this).closest('table').height())
+stickies[i].offset({
+left: Math.round(headers[i].closest("div[id^=WebPartWPQ]").offset().left)
+});
+if(top_old[i] >= 0 && top_new[i] <= 0 ||
+bottom_old[i] <= 0 && bottom_new[i] >= 0 ||
+top_old[i] === undefined && bottom_old[i] === undefined && top_new[i] < 0 && bottom_new[i] > 0 ) {
+width();
+stickies[i].fadeIn();
+} else if (top_old[i] <= 0 && top_new[i] >= 0 || bottom_old[i] >= 0 && bottom_new[i] <= 0 ) {
+stickies[i].fadeOut();
+}
+})
+}
+}
+</script>
+
