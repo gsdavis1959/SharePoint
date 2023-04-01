@@ -1,13 +1,2 @@
-To freeze the header of a modern SharePoint list, you can follow these steps:
-
-Open the SharePoint list in which you want to freeze the header.
-
-Click on the "Edit" button at the top right corner of the list.
-
-Select the "Column options" dropdown menu from the toolbar.
-
-Choose "Freeze header" from the options.
-
-Once you click on "Freeze header", the header row will become static and stay visible even when you scroll down the list.
-
-Note: If you want to unfreeze the header, you can simply click on "Column options" and select "Unfreeze header" from the dropdown menu.
+Reference
+https://natechamberlain.com/2016/10/06/sticky-floating-list-headers/
