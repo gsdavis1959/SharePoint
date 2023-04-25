@@ -161,6 +161,28 @@ stickies[i].fadeOut();
 }
 </script>
 
+# json to hide Add New button
+
+1. Navigate to the list or document library >> Click on the View dropdown and choose “Format current view” >> Click on “Advanced Mode”
+2, Paste the JSON below to hide the New button from the toolbar.
+
+
+Read more: https://www.sharepointdiary.com/2022/03/hide-button-in-sharepoint-online-list-or-document-library.html#ixzz7zwE38WxO
+
+{
+  "commandBarProps" : {
+    "commands": [
+      {
+        "key": "new",
+        "hide": true
+      }   
+    ]
+  }
+}
+
+
+#Read more: https://www.sharepointdiary.com/2022/03/hide-button-in-sharepoint-online-list-or-document-library.html#ixzz7zwDrRW9v
+
 # sticky header resources
 https://sharepoint.stackexchange.com/questions/154313/how-to-make-a-custom-list-have-sticky-floating-headers
 http://www.sharepointsheriff.com/sharepoint-2013-sticky-headers/
@@ -172,3 +194,4 @@ https://answers.microsoft.com/en-us/msoffice/forum/all/random-number/be3e3855-52
 https://support.microsoft.com/en-us/office/customize-permissions-for-a-sharepoint-list-or-library-02d770f3-59eb-4910-a608-5f84cc297782
 # create a survey
 https://support.microsoft.com/en-us/office/create-a-survey-ea52a787-822e-4f7e-b5ed-77bb14df3aba
+# set documents to download when clicked
