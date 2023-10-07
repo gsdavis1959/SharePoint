@@ -59,4 +59,100 @@ Source: Conversation with Bing, 10/7/2023
 (10) undefined. https://twitter.com/techan_k.
 (11) undefined. https://mynote365.hatenadiary.com/.
 
-Sent from my iPhone
+From ChatGPT
+{
+   "$schema": "https://developer.microsoft.com/json-schemas/sp/view-formatting.schema.json",
+   "additionalRowClass": "ms-borderColor-neutralLight",
+   "hideSelection": true,
+   "rowFormatter": {
+      "elmType": "div",
+      "attributes": {
+         "class": {
+            "operator": "?",
+            "operands": [
+               {
+                  "operator": "==",
+                  "operands": [
+                     "@rowIndex",
+                     "0"
+                  ]
+               },
+               "ms-bgColor-themeLighter"
+            ]
+         },
+         "title": "='Event: ' + @currentField.title + '\\nFrom: ' + @currentField.start.dateTime + '\\nTo: ' + @currentField.end.dateTime"
+      },
+      "children": [
+         {
+            "elmType": "span",
+            "attributes": {
+               "class": "ms-fontWeight-semibold"
+            },
+            "txtContent": "@currentField.title"
+         },
+         {
+            "elmType": "div",
+            "attributes": {
+               "class": "ms-textColor-neutralSecondary"
+            },
+            "txtContent": {
+               "operator": "+",
+               "operands": [
+                  "From: ",
+                  {
+                     "operator": "substring",
+                     "operands": [
+                        "@currentField.start.dateTime",
+                        0,
+                        19
+                     ]
+                  }
+               ]
+            }
+         },
+         {
+            "elmType": "div",
+            "attributes": {
+               "class": "ms-textColor-neutralSecondary"
+            },
+            "txtContent": {
+               "operator": "+",
+               "operands": [
+                  "To: ",
+                  {
+                     "operator": "substring",
+                     "operands": [
+                        "@currentField.end.dateTime",
+                        0,
+                        19
+                     ]
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
+
+
+SharePoint JSON formatting can be used to customize the appearance and behavior of SharePoint lists and libraries. In your case, you want to format a SharePoint calendar event view to display the event title, start date/time, end date/time, and show the start and end date/times in a hover tooltip. Here's an example of JSON formatting that achieves this:
+This JSON formatting applies to each event in the calendar view. It sets the background color of the first row to a lighter theme color and displays the event title, start date/time, and end date/time. When you hover over an event, it shows a tooltip with the event title, start date/time, and end date/time.
+
+To apply this JSON formatting to your SharePoint calendar view, follow these steps:
+
+Open the SharePoint calendar list.
+
+Click on "Calendar" in the toolbar to open the calendar view.
+
+Click on the "View options" dropdown (it looks like a filter icon) and select "Format current view."
+
+In the format panel, switch to the "Advanced mode."
+
+Replace any existing JSON with the code provided above.
+
+Click "Save" to apply the formatting.
+
+Your SharePoint calendar view should now display events with the specified formatting, including the hover tooltip.
+
+
+
