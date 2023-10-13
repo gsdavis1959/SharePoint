@@ -155,4 +155,92 @@ Click "Save" to apply the formatting.
 Your SharePoint calendar view should now display events with the specified formatting, including the hover tooltip.
 
 
+Format for combining event with a lookup column
+
+{
+   "$schema": "https://developer.microsoft.com/json-schemas/sp/view-formatting.schema.json",
+   "additionalRowClass": "ms-borderColor-neutralLight",
+   "hideSelection": true,
+   "rowFormatter": {
+      "elmType": "div",
+      "attributes": {
+         "class": {
+            "operator": "?",
+            "operands": [
+               {
+                  "operator": "==",
+                  "operands": [
+                     "@rowIndex",
+                     "0"
+                  ]
+               },
+               "ms-bgColor-themeLighter"
+            ]
+         },
+         "title": "='Event: ' + @currentField.title + '\\nPerson: ' + [$Person.title] + '\\nStart Date: ' + @currentField.start.dateTime + '\\nEnd Date: ' + @currentField.end.dateTime"
+      },
+      "children": [
+         {
+            "elmType": "span",
+            "attributes": {
+               "class": "ms-fontWeight-semibold"
+            },
+            "txtContent": "@currentField.title"
+         },
+         {
+            "elmType": "div",
+            "attributes": {
+               "class": "ms-textColor-neutralSecondary"
+            },
+            "txtContent": {
+               "operator": "+",
+               "operands": [
+                  "Person: ",
+                  "[$Person.title]"
+               ]
+            }
+         },
+         {
+            "elmType": "div",
+            "attributes": {
+               "class": "ms-textColor-neutralSecondary"
+            },
+            "txtContent": {
+               "operator": "+",
+               "operands": [
+                  "Start Date: ",
+                  {
+                     "operator": "substring",
+                     "operands": [
+                        "@currentField.start.dateTime",
+                        0,
+                        19
+                     ]
+                  }
+               ]
+            }
+         },
+         {
+            "elmType": "div",
+            "attributes": {
+               "class": "ms-textColor-neutralSecondary"
+            },
+            "txtContent": {
+               "operator": "+",
+               "operands": [
+                  "End Date: ",
+                  {
+                     "operator": "substring",
+                     "operands": [
+                        "@currentField.end.dateTime",
+                        0,
+                        19
+                     ]
+                  }
+               ]
+            }
+         }
+      ]
+   }
+}
 
