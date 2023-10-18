@@ -1,0 +1,39 @@
+In a modern SharePoint Weekly Calendar view, "All Day Events" are typically displayed in a separate section at the top of the calendar, and each day is represented as an all-day slot. If you want to remove this separate "All Day Events" section and have each day shown as an entire day on the calendar alongside other events, you would need to use SharePoint JSON column formatting to customize the view. Here's how you can achieve this:
+
+Go to your SharePoint site and navigate to the calendar list that you want to customize.
+
+Click on the "Week" view to open the weekly calendar view.
+
+Click the "Column settings" icon (usually represented by three dots) next to the date column (e.g., "Start Time" or "Event Date").
+
+Select "Format this column."
+
+In the column formatting pane, select "Advanced mode" to use JSON formatting.
+
+Use the following JSON code as an example to modify the column formatting to hide the "All Day Events" section and show each day as an entire day:
+
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/sp/v2/column-formatting.schema.json",
+  "elmType": "div",
+  "children": [
+    {
+      "elmType": "div",
+      "attributes": {
+        "class": "ms-fontWeight-semibold"
+      },
+      "txtContent": "=formatDateTime(@currentField, 'dddd, MMMM dd, yyyy')"
+    },
+    {
+      "elmType": "div",
+      "txtContent": "=if(@currentField == @now, 'Today', '')"
+    }
+  ]
+}
+
+
+This code will format the date column to display each day as an entire day, including the day name, date, and year. It also highlights the current day as "Today."
+
+Click "Save" to apply the JSON formatting.
+The result of this JSON formatting will make the calendar view show each day as an entire day, and the "All Day Events" section will be removed. "All Day Events" will be integrated into the weekly view as regular events. This approach essentially transforms the view to display daily events as part of the weekly calendar, which is a common request for users who prefer this layout.
+
+Please note that this customization may affect the readability of the calendar view, especially if you have many events on the same day. You should test and adjust the formatting to suit your specific needs and preferences.
